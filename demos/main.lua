@@ -1,6 +1,6 @@
 -- we want shapes to move different places
 -- then we want the shapes to bounce around in the 
---
+-- make a shape into a data structure (object)
 --
 --
 function love.load()
