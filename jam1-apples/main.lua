@@ -8,6 +8,8 @@ function love.load()
 	timeSinceLastSpawn = 0
 	setInterval = 0.6
 
+	score = 0
+
 	player = {}
 	player.y = 450
 	player.x = 50
@@ -41,6 +43,9 @@ end
 function love.update(dt)
 	-- timer
 	timeSinceLastSpawn = timeSinceLastSpawn + dt 
+
+	--score 
+	score = math.floor(score + (dt * 60)) 
 
 	--player movement left and right
 	if love.keyboard.isDown("right") then
@@ -95,12 +100,14 @@ function love.draw()
 		end
 		love.graphics.rectangle("fill", enemy.x, enemy.y, enemy.l, enemy.l)
 	end
+
+	--score
+	love.graphics.print("Score: " .. score)
 	
 	--debug text
     love.graphics.setColor(1,1,1)
 	if isDebugMode then
-		love.graphics.print(player.x)
-		love.graphics.print("screen width:" .. screenWidth, 0, 20)
+		love.graphics.print("screen width:" .. screenWidth, 0, 40)
 		love.graphics.print("timer is at: " .. timeSinceLastSpawn, 0, 60)
 
 		love.graphics.print("enemylist: " .. table.getn(enemyList), 0, 80)
@@ -124,6 +131,6 @@ end
 --		[x] destroy enemy
 --		[x] store them on a list maybe
 -- [x] collision detection
--- [ ] scoring system
+-- [x] scoring system
 -- [ ] game over state
 -- [ ] better sprites // or not
