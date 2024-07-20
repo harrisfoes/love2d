@@ -5,19 +5,31 @@ function love.load()
 	isDebugMode = true 
 	isCollide = false
 
+	isGameOver = false
+
 	timeSinceLastSpawn = 0
 	setInterval = 0.6
 
 	score = 0
 
 	player = {}
-	player.y = 450
-	player.x = 50
 	player.l = 60
+	player.y = 450
+	player.x = math.random(0, screenWidth - player.l)
 	player.speed = 400
 
 	enemyList = {}
 
+end
+
+function resetGame()
+	timeSinceLastSpawn = 0
+	player.x = math.random(0, screenWidth - player.l)
+	score = 0
+
+	for i = #enemyList, 1, -1 do 
+		table.remove(enemyList, i)
+	end
 end
 
 function createEnemy()
@@ -41,47 +53,58 @@ function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
 end
 
 function love.update(dt)
-	-- timer
-	timeSinceLastSpawn = timeSinceLastSpawn + dt 
 
-	--score 
-	score = math.floor(score + (dt * 60)) 
+	if not isGameOver then
 
-	--player movement left and right
-	if love.keyboard.isDown("right") then
-		player.x = player.x + player.speed * dt
-	elseif love.keyboard.isDown("left") then
-		player.x = player.x - player.speed * dt 
-	end
-	
-	--player bounds
-	if player.x < 0 then
-		player.x = 0
-	elseif player.x > screenWidth - player.l then
-		player.x = screenWidth - player.l
-	end
+		--score 
+		score = math.floor(score + (dt * 60)) 
 
-	--using timers to make enemies
-	if timeSinceLastSpawn >= setInterval then
-		timeSinceLastSpawn = 0 
-		table.insert(enemyList, createEnemy())
-	end
-
-	--loop through enemies in reverse ky best practice daw
-	for i = #enemyList, 1, -1 do
-		local enemy = enemyList[i]
-		enemy.y = enemy.y + enemy.speed * dt
-
-		--remove enemies that go off-screen
-		if enemy.y > screenHeight then
-			table.remove(enemyList, i)
+		--player movement left and right
+		if love.keyboard.isDown("right") then
+			player.x = player.x + player.speed * dt
+		elseif love.keyboard.isDown("left") then
+			player.x = player.x - player.speed * dt 
+		end
+		
+		--player bounds
+		if player.x < 0 then
+			player.x = 0
+		elseif player.x > screenWidth - player.l then
+			player.x = screenWidth - player.l
 		end
 
-		--CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
-		if CheckCollision(player.x,player.y,player.l,player.l, enemy.x,enemy.y,enemy.l,enemy.l) then
-			isCollide = true
-		else 
-			isCollide = false
+		-- enemy spawntimer
+		timeSinceLastSpawn = timeSinceLastSpawn + dt 
+
+		--using timers to make enemies
+		if timeSinceLastSpawn >= setInterval then
+			timeSinceLastSpawn = 0 
+			table.insert(enemyList, createEnemy())
+		end
+
+		--loop through enemies in reverse and do checks 
+		for i = #enemyList, 1, -1 do
+			local enemy = enemyList[i]
+			enemy.y = enemy.y + enemy.speed * dt
+
+			--remove enemies that go off-screen
+			if enemy.y > screenHeight then
+				table.remove(enemyList, i)
+			end
+
+			--CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
+			if CheckCollision(player.x,player.y,player.l,player.l, enemy.x,enemy.y,enemy.l,enemy.l) then
+				isCollide = true
+				isGameOver = true
+			else
+				isCollide = false
+			end
+		end
+
+	elseif isGameOver then
+		if love.keyboard.isDown("space") then
+			resetGame()
+			isGameOver = false
 		end
 	end
 end
@@ -117,10 +140,12 @@ function love.draw()
 		end
 	end
 
+	if isGameOver then
+		love.graphics.print("GAME OVER PRESS SPACE TO AGAIN", 400,300)	
+		love.graphics.print("Final Score is " .. score, 400,320)
+	end
+
 end
-
-
-
 
 -- [x] build character + movement left to right + bounds
 -- [x] make enemies fall from the screen
@@ -132,5 +157,6 @@ end
 --		[x] store them on a list maybe
 -- [x] collision detection
 -- [x] scoring system
--- [ ] game over state
+-- [x] game over state
 -- [ ] better sprites // or not
+-- [ ] sound effects
