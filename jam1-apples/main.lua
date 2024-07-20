@@ -13,12 +13,16 @@ function love.load()
 	score = 0
 
 	player = {}
-	player.l = 60
+	player.l = 60 
 	player.y = 450
 	player.x = math.random(0, screenWidth - player.l)
 	player.speed = 400
+	player.sprite = love.graphics.newImage('ship.png')
+
+	background = love.graphics.newImage('bg_space.png')
 
 	enemyList = {}
+	enemyList.sprite = love.graphics.newImage('meteor.png')
 
 end
 
@@ -109,19 +113,28 @@ function love.update(dt)
 	end
 end
 
+function resetGraphicsColor()
+	love.graphics.setColor(1,1,1)
+end
+
 function love.draw()
 
+	--bg
+	love.graphics.draw(background, 0, 0)
+
 	--draw player
-	love.graphics.setColor(0,0,1)
-	love.graphics.rectangle("fill", player.x, player.y, player.l, player.l)
+	love.graphics.setColor(1,0,0)
+	love.graphics.rectangle("line", player.x, player.y, player.l, player.l)
+	resetGraphicsColor()
+	love.graphics.draw(player.sprite, player.x, player.y, nil, 0.675)
 
 	--draw enemy
-	love.graphics.setColor(1,1,1)
 	for i,enemy in ipairs(enemyList) do
 		if isCollide then
 			love.graphics.setColor(1,0,0)
 		end
-		love.graphics.rectangle("fill", enemy.x, enemy.y, enemy.l, enemy.l)
+		love.graphics.rectangle("line", enemy.x, enemy.y, enemy.l, enemy.l)
+		love.graphics.draw(enemyList.sprite, enemy.x, enemy.y, 0, 0.425)
 	end
 
 	--score
