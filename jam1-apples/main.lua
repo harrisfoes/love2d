@@ -2,7 +2,7 @@ function love.load()
 
 	screenWidth = love.graphics.getWidth()
 	screenHeight = love.graphics.getHeight()
-	isDebugMode = true 
+	isDebugMode = false
 	isCollide = false
 
 	isGameOver = false
@@ -13,7 +13,7 @@ function love.load()
 	score = 0
 
 	player = {}
-	player.l = 60 
+	player.l = 66 
 	player.y = 450
 	player.x = math.random(0, screenWidth - player.l)
 	player.speed = 400
@@ -23,6 +23,13 @@ function love.load()
 
 	enemyList = {}
 	enemyList.sprite = love.graphics.newImage('meteor.png')
+
+	sounds = {}
+	sounds.bg = love.audio.newSource("audio/blst3r_bg.mp3", "stream", "true")
+	sounds.bg:setLooping(true)
+	sounds.xp = love.audio.newSource("audio/explo.wav", "stream", "true")
+
+	sounds.bg:play()
 
 end
 
@@ -34,11 +41,13 @@ function resetGame()
 	for i = #enemyList, 1, -1 do 
 		table.remove(enemyList, i)
 	end
+
+	sounds.bg:play()
 end
 
 function createEnemy()
     return {
-		l = 35,
+		l = 40,
         x = math.random(0, screenWidth - 35),
         y = 0,
         speed = 350 
@@ -100,12 +109,14 @@ function love.update(dt)
 			if CheckCollision(player.x,player.y,player.l,player.l, enemy.x,enemy.y,enemy.l,enemy.l) then
 				isCollide = true
 				isGameOver = true
+				sounds.xp:play()
 			else
 				isCollide = false
 			end
 		end
 
 	elseif isGameOver then
+		sounds.bg:stop()
 		if love.keyboard.isDown("space") then
 			resetGame()
 			isGameOver = false
@@ -124,21 +135,25 @@ function love.draw()
 
 	--draw player
 	love.graphics.setColor(1,0,0)
-	love.graphics.rectangle("line", player.x, player.y, player.l, player.l)
+
+	if isDebugMode then
+		love.graphics.rectangle("line", player.x, player.y, player.l, player.l)
+	end
+
 	resetGraphicsColor()
 	love.graphics.draw(player.sprite, player.x, player.y, nil, 0.675)
 
 	--draw enemy
 	for i,enemy in ipairs(enemyList) do
-		if isCollide then
+		if isCollide and isDebug then
 			love.graphics.setColor(1,0,0)
+			love.graphics.rectangle("line", enemy.x, enemy.y, enemy.l, enemy.l)
 		end
-		love.graphics.rectangle("line", enemy.x, enemy.y, enemy.l, enemy.l)
 		love.graphics.draw(enemyList.sprite, enemy.x, enemy.y, 0, 0.425)
 	end
 
 	--score
-	love.graphics.print("Score: " .. score)
+	love.graphics.printf("Score: " .. score, 0, 560, screenWidth, "center")
 	
 	--debug text
     love.graphics.setColor(1,1,1)
@@ -154,8 +169,8 @@ function love.draw()
 	end
 
 	if isGameOver then
-		love.graphics.print("GAME OVER PRESS SPACE TO AGAIN", 400,300)	
-		love.graphics.print("Final Score is " .. score, 400,320)
+		love.graphics.printf("GAME OVER", 0,540, screenWidth, "center")	
+		love.graphics.printf("PRESS SPACE TO PLAY AGAIN", 0,580, screenWidth, "center")	
 	end
 
 end
@@ -171,5 +186,8 @@ end
 -- [x] collision detection
 -- [x] scoring system
 -- [x] game over state
--- [ ] better sprites // or not
+-- [x] better sprites // or not
 -- [ ] sound effects
+--	[ ] bg music
+--	[ ] collision effect?
+--	[ ] booster effect?
