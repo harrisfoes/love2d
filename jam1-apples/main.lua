@@ -2,7 +2,7 @@ function love.load()
 
 	screenWidth = love.graphics.getWidth()
 	screenHeight = love.graphics.getHeight()
-	isDebugMode = false
+	isDebugMode = false 
 	isCollide = false
 
 	isGameOver = false
@@ -20,6 +20,8 @@ function love.load()
 	player.sprite = love.graphics.newImage('ship.png')
 
 	background = love.graphics.newImage('bg_space.png')
+	background:setWrap("repeat","repeat")
+	bg_quad = love.graphics.newQuad(0, 0, screenWidth, screenHeight, background:getWidth(), background:getHeight())
 
 	enemyList = {}
 	enemyList.sprite = love.graphics.newImage('meteor.png')
@@ -35,6 +37,7 @@ end
 
 function resetGame()
 	timeSinceLastSpawn = 0
+	setInterval = 0.6
 	player.x = math.random(0, screenWidth - player.l)
 	score = 0
 
@@ -95,6 +98,11 @@ function love.update(dt)
 			table.insert(enemyList, createEnemy())
 		end
 
+		--increase difficulty every 300 points
+		if score % 300 == 0 and score > 1 then
+			setInterval = setInterval - 0.1
+		end
+
 		--loop through enemies in reverse and do checks 
 		for i = #enemyList, 1, -1 do
 			local enemy = enemyList[i]
@@ -131,7 +139,7 @@ end
 function love.draw()
 
 	--bg
-	love.graphics.draw(background, 0, 0)
+	love.graphics.draw(background, bg_quad, 0, 0)
 
 	--draw player
 	love.graphics.setColor(1,0,0)
@@ -145,8 +153,7 @@ function love.draw()
 
 	--draw enemy
 	for i,enemy in ipairs(enemyList) do
-		if isCollide and isDebug then
-			love.graphics.setColor(1,0,0)
+		if isDebugMode then
 			love.graphics.rectangle("line", enemy.x, enemy.y, enemy.l, enemy.l)
 		end
 		love.graphics.draw(enemyList.sprite, enemy.x, enemy.y, 0, 0.425)
@@ -169,8 +176,8 @@ function love.draw()
 	end
 
 	if isGameOver then
-		love.graphics.printf("GAME OVER", 0,540, screenWidth, "center")	
-		love.graphics.printf("PRESS SPACE TO PLAY AGAIN", 0,580, screenWidth, "center")	
+		love.graphics.printf("GAME OVER", 0,screenHeight / 2, screenWidth, "center")	
+		love.graphics.printf("PRESS SPACE TO PLAY AGAIN", 0,screenHeight / 2 + 20, screenWidth, "center")	
 	end
 
 end
@@ -187,7 +194,8 @@ end
 -- [x] scoring system
 -- [x] game over state
 -- [x] better sprites // or not
--- [ ] sound effects
---	[ ] bg music
---	[ ] collision effect?
---	[ ] booster effect?
+-- [x] sound effects
+--	[x] bg music
+--	[x] collision effect?
+-- [x] fix text display
+-- [ ] polish collisions or sprite
