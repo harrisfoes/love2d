@@ -5,23 +5,35 @@ function love.load()
 	player.x = 20
 	player.y = 400
 	player.l = 40
+	player.gravity = 0
 
 end
 
 function love.keypressed(key)	
-		player.y = player.y - 60
+		player.y = player.y - 200
 end
 
 function love.update(dt)
 
 
 	--falling down
-	if player.y < 400 then
-		player.y = player.y + 18 * dt
+	player.y = player.y + 300 * dt
+	player.gravity  = player.gravity + 1
+	if player.y > 400 then
+		player.y = 400
 	end
+
 
 end
 
 function love.draw()
 	love.graphics.rectangle("fill", player.x, player.y, player.l, player.l)
 end
+
+
+
+---Planning for jumpy dino game
+--[ ] make dino jump
+--[ ] make dino fall
+--[ ] make enemies appear from the horizon
+--[ ] add background
