@@ -2,13 +2,24 @@ function love.load()
 	print("Hello world")
 
 	player = {}
-	player.x = 0
-	player.y = 10
+	player.x = 20
+	player.y = 400
 	player.l = 40
 
 end
 
+function love.keypressed(key)	
+		player.y = player.y - 60
+end
+
 function love.update(dt)
+
+
+	--falling down
+	if player.y < 400 then
+		player.y = player.y + 18 * dt
+	end
+
 end
 
 function love.draw()
