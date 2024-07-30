@@ -1,11 +1,14 @@
 function love.load()
 	print("Hello world")
 
+	ground_x = 450
+
 	player = {}
-	player.x = 20
+	player.x = 40
 	player.y = 400
-	player.l = 40
+	player.l = 80 
 	player.gravity = 0
+
 
 end
 
