@@ -8,13 +8,14 @@ function player_load()
     player.isGrounded = true;
 end
 
-function player_update()
+function player_update(dt)
 
     gravity = 0.3
     ground = 260
 
     player.dy = player.dy + gravity
 
+    -- handling the jump logic
     if love.keyboard.isDown("space") and player.isGrounded then
         player.isGrounded = false;
         player.dy = player.dy - 10
@@ -22,9 +23,11 @@ function player_update()
 
     player.y = player.y + player.dy
 
+    -- when player falls to the ground, reset
     if player.y > ground then
         player.y = ground;
         player.isGrounded = true
+        player.dy = 0
     end    
 
 end

@@ -4,7 +4,10 @@ The purpose of this game is to enjoy programming a fun program
 
 [x] make the player
 [x] make the player jump
-[ ] polish to an acceptable level
+[x] polish to an acceptable level
 
-[ ] make the enemy move from back to front
+[x] make the enemy move from back to front
+[ ] polish
 [ ] collisions
+
+[ ] make background
