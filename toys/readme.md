@@ -11,10 +11,10 @@ The purpose of this game is to enjoy programming a fun program
 [x] implement dt on enemy movement
 
     -- enemy object logic
-    [ ] make enemy into an array
-    [ ] spawn at random intervals
-    [ ] create them at the leftmost part
-    [ ] when they reach the right most part, destroy them
+    [x] make enemy into an array
+    [x] spawn at random intervals
+    [x] create them at the leftmost part
+    [x] when they reach the right most part, destroy them
 
 [ ] polish
 [ ] collisions
