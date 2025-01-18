@@ -3,9 +3,10 @@ function player_load()
     player.x = 30
     player.y = 260
     player.width = 50
-    player.height = 40
+    player.height = 80
     player.dy = 0
     player.isGrounded = true;
+    player.sprite = love.graphics.newImage('graphics/Player/player_stand.png')
 end
 
 function player_update(dt)
@@ -36,4 +37,5 @@ end
 function player_draw()
     love.graphics.print("player.y " .. player.y .. "; player.dy " .. player.dy)
     love.graphics.rectangle("fill", player.x, player.y, player.width, player.height)
+    love.graphics.draw(player.sprite, player.x, player.y)
 end

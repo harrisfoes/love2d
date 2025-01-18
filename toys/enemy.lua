@@ -11,7 +11,8 @@ function create_enemy()
         height = 60,
         x = love.graphics.getWidth(), --todo check this value
         y = 260,
-        speed = 600
+        speed = 600,
+        sprite = love.graphics.newImage('graphics/snail/snail1.png')
     }
 end
 
@@ -22,7 +23,7 @@ function enemy_update(dt)
 
     if time_since_last_spawn >= set_interval then
         time_since_last_spawn = 0
-        set_interval = math.random(0.8, 2)
+        set_interval = math.random(0.8, 3)
         table.insert(enemy_list, create_enemy())
     end
 
@@ -46,10 +47,13 @@ function enemy_draw(dt)
     love.graphics.print("setInterval" .. set_interval, 0, 60)
      
     --enemy draw from table
-    love.graphics.setColor(1,0,0)
     for i, enemy in ipairs(enemy_list) do
+        
+        love.graphics.setColor(1,0,0)
         love.graphics.rectangle("fill", enemy.x, 260, enemy.width, enemy.height) 
+        love.graphics.reset()
+
+        love.graphics.draw(enemy.sprite, enemy.x, enemy.y)
     end
-    love.graphics.reset()
 
 end
