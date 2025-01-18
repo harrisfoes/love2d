@@ -9,9 +9,9 @@ function create_enemy()
     return {
         width = 60,
         height = 60,
-        x = love.graphics.getWidth(), --todo check this value
+        x = love.graphics.getWidth(), --todo che`ck this value
         y = 260,
-        speed = 600,
+        speed = math.random(600, 800),
         sprite = love.graphics.newImage('graphics/snail/snail1.png')
     }
 end
@@ -52,7 +52,7 @@ function enemy_draw(dt)
         love.graphics.setColor(1,0,0)
         love.graphics.rectangle("fill", enemy.x, 260, enemy.width, enemy.height) 
         love.graphics.reset()
-
+        love.graphics.print("speed" .. enemy.speed, i * 120,20)
         love.graphics.draw(enemy.sprite, enemy.x, enemy.y)
     end
 
