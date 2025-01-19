@@ -5,8 +5,15 @@ function player_load()
     player.width = 50
     player.height = 80
     player.dy = 0
-    player.isGrounded = true;
+    player.isGrounded = true
     player.sprite = love.graphics.newImage('graphics/Player/player_stand.png')
+    player.spr_jump = love.graphics.newImage('graphics/Player/jump.png')
+    player.spr_walk1 = love.graphics.newImage('graphics/Player/player_walk_1.png')
+    player.spr_walk2 = love.graphics.newImage('graphics/Player/player_walk_2.png')
+    
+    walkcycle_counter = 0
+    walkcycle_interval = 0.2
+    walksprite = 1
 end
 
 function player_update(dt)
@@ -27,16 +34,38 @@ function player_update(dt)
 
     -- when player falls to the ground, reset
     if player.y + player.height > ground then
-        player.y = ground - player.height;
+        player.y = ground - player.height
         player.isGrounded = true
         player.dy = 0
-    end    
+    end 
+    
+    --animation counter
+    walkcycle_counter = walkcycle_counter + dt
+
+    if walkcycle_counter >= walkcycle_interval then
+        walkcycle_counter = 0
+        if walksprite == 1 then
+            walksprite = 2
+        else
+            walksprite = 1
+        end
+    end
+
 
 end
 
 function player_draw()
     love.graphics.print("player.y " .. player.y .. "; player.dy " .. player.dy)
     love.graphics.rectangle("fill", player.x, player.y, player.width, player.height)
-    love.graphics.draw(player.sprite, player.x, player.y)
     love.graphics.line(0, 280, love.graphics.getWidth(), 280)
+
+    if player.isGrounded then
+        if walksprite == 1 then
+            love.graphics.draw(player.spr_walk1, player.x, player.y)
+        elseif walksprite == 2 then
+            love.graphics.draw(player.spr_walk2, player.x, player.y)
+        end
+    else
+        love.graphics.draw(player.spr_jump, player.x, player.y)
+    end
 end
