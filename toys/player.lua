@@ -12,7 +12,7 @@ function player_load()
     player.spr_walk2 = love.graphics.newImage('graphics/Player/player_walk_2.png')
     
     walkcycle_counter = 0
-    walkcycle_interval = 0.2
+    walkcycle_interval = 0.15
     walksprite = 1
 end
 

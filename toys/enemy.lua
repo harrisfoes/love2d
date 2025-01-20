@@ -10,7 +10,7 @@ function create_enemy()
         width = 60,
         height = 60,
         x = love.graphics.getWidth(), --todo che`ck this value
-        y = 260,
+        y = 280 - 60,
         speed = math.random(600, 800),
         sprite = love.graphics.newImage('graphics/snail/snail1.png')
     }

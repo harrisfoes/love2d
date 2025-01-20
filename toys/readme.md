@@ -16,6 +16,14 @@ The purpose of this game is to enjoy programming a fun program
     [x] create them at the leftmost part
     [x] when they reach the right most part, destroy them
 
+[x] added sprites
+[x] added player sprites and animation
+
+[x] added backgrounds
+
+[ ] figure out ground logic
+[ ] figure out image heights
+
 [ ] polish
 [ ] collisions
 
