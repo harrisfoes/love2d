@@ -3,16 +3,17 @@ function enemy_load()
 
     time_since_last_spawn = 0
     set_interval = 0.6 
+    snail_image = love.graphics.newImage('graphics/snail/snail1.png')
 end
 
 function create_enemy()
     return {
-        width = 60,
-        height = 60,
+        width = snail_image:getWidth(),
+        height = snail_image:getHeight(),
         x = love.graphics.getWidth(), --todo che`ck this value
-        y = 280 - 60,
+        y = 250,
         speed = math.random(600, 800),
-        sprite = love.graphics.newImage('graphics/snail/snail1.png')
+        sprite = snail_image 
     }
 end
 
@@ -42,17 +43,20 @@ end
 function enemy_draw(dt)
 
     --debug
+    love.graphics.setColor(1,0,0)
     love.graphics.print("enemy is here",0,20)
     love.graphics.print("timeSince" .. time_since_last_spawn, 0, 40)
     love.graphics.print("setInterval" .. set_interval, 0, 60)
+    love.graphics.reset()
      
     --enemy draw from table
     for i, enemy in ipairs(enemy_list) do
-        
+
         love.graphics.setColor(1,0,0)
-        love.graphics.rectangle("fill", enemy.x, 260, enemy.width, enemy.height) 
-        love.graphics.reset()
+        love.graphics.rectangle("fill", enemy.x, 250, enemy.width, enemy.height) 
         love.graphics.print("speed" .. enemy.speed, i * 120,20)
+        love.graphics.reset()
+
         love.graphics.draw(enemy.sprite, enemy.x, enemy.y)
     end
 

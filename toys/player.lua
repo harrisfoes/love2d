@@ -1,12 +1,15 @@
+
+player_box = love.graphics.newImage('graphics/Player/player_stand.png')
+
+
 function player_load()
     player = {}
     player.x = 30
     player.y = 280 - 80
-    player.width = 50
-    player.height = 80
+    player.width = player_box:getWidth() 
+    player.height = player_box:getHeight() 
     player.dy = 0
     player.isGrounded = true
-    player.sprite = love.graphics.newImage('graphics/Player/player_stand.png')
     player.spr_jump = love.graphics.newImage('graphics/Player/jump.png')
     player.spr_walk1 = love.graphics.newImage('graphics/Player/player_walk_1.png')
     player.spr_walk2 = love.graphics.newImage('graphics/Player/player_walk_2.png')
@@ -55,9 +58,13 @@ function player_update(dt)
 end
 
 function player_draw()
+    
+    love.graphics.setColor(1,0,0)
     love.graphics.print("player.y " .. player.y .. "; player.dy " .. player.dy)
+    love.graphics.setColor(1,0,1)
     love.graphics.rectangle("fill", player.x, player.y, player.width, player.height)
-    love.graphics.line(0, 280, love.graphics.getWidth(), 280)
+    love.graphics.reset()
+    --love.graphics.line(0, 280, love.graphics.getWidth(), 280)
 
     if player.isGrounded then
         if walksprite == 1 then

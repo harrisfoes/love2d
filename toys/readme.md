@@ -21,8 +21,8 @@ The purpose of this game is to enjoy programming a fun program
 
 [x] added backgrounds
 
-[ ] figure out ground logic
-[ ] figure out image heights
+[x] figure out ground logic
+[x] figure out image heights
 
 [ ] polish
 [ ] collisions
