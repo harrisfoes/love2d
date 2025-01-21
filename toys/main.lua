@@ -2,6 +2,7 @@ require "player"
 require "enemy"
 
 g_ground = 280
+debug = true 
 
 function love.load()
 	player_load()

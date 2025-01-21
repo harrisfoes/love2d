@@ -43,19 +43,22 @@ end
 function enemy_draw(dt)
 
     --debug
-    love.graphics.setColor(1,0,0)
-    love.graphics.print("enemy is here",0,20)
-    love.graphics.print("timeSince" .. time_since_last_spawn, 0, 40)
-    love.graphics.print("setInterval" .. set_interval, 0, 60)
-    love.graphics.reset()
+    if debug then
+        love.graphics.setColor(1,0,0)
+        love.graphics.print("timeSince" .. time_since_last_spawn, 0, 40)
+        love.graphics.print("setInterval" .. set_interval, 0, 60)
+        love.graphics.reset()
+    end
      
     --enemy draw from table
     for i, enemy in ipairs(enemy_list) do
 
-        love.graphics.setColor(1,0,0)
-        love.graphics.rectangle("fill", enemy.x, 250, enemy.width, enemy.height) 
-        love.graphics.print("speed" .. enemy.speed, i * 120,20)
-        love.graphics.reset()
+        if debug then
+            love.graphics.setColor(1,0,0)
+            love.graphics.rectangle("fill", enemy.x, 250, enemy.width, enemy.height) 
+            love.graphics.print("speed" .. enemy.speed, i * 120,20)
+            love.graphics.reset()
+        end
 
         love.graphics.draw(enemy.sprite, enemy.x, enemy.y)
     end

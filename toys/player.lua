@@ -57,14 +57,21 @@ function player_update(dt)
 
 end
 
-function player_draw()
-    
+function player_debug()
+
     love.graphics.setColor(1,0,0)
     love.graphics.print("player.y " .. player.y .. "; player.dy " .. player.dy)
     love.graphics.setColor(1,0,1)
     love.graphics.rectangle("fill", player.x, player.y, player.width, player.height)
     love.graphics.reset()
     --love.graphics.line(0, 280, love.graphics.getWidth(), 280)
+end
+
+function player_draw()
+
+    if debug then
+        player_debug()
+    end
 
     if player.isGrounded then
         if walksprite == 1 then

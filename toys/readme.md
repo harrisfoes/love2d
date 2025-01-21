@@ -24,7 +24,10 @@ The purpose of this game is to enjoy programming a fun program
 [x] figure out ground logic
 [x] figure out image heights
 
-[ ] polish
-[ ] collisions
+[ ] figure out config file and screen dimensions
+[x] debug switching
 
 [ ] make background
+[ ] collisions
+
+[ ] polish
