@@ -2,7 +2,7 @@ require "player"
 require "enemy"
 
 g_ground = 280
-debug = true 
+debug = false  
 collide = false
 
 function love.load()
@@ -11,6 +11,13 @@ function love.load()
 
 	spr_ground = love.graphics.newImage('graphics/ground.png')
 	spr_sky= love.graphics.newImage('graphics/Sky.png')
+
+	sounds = {}
+	sounds.bg = love.audio.newSource("audio/music.wav", "stream", "true")
+	sounds.bg:setLooping(true)
+	sounds.jump = love.audio.newSource("audio/jump.mp3", "stream", "true")
+
+	sounds.bg:play()
 
 end
 
@@ -24,13 +31,19 @@ end
 
 
 function love.draw()	
+
+	--draw the stuff
 	love.graphics.draw(spr_sky, 0, 0)
 	love.graphics.draw(spr_ground, 0, g_ground)
 	player_draw()
 	enemy_draw()
 
+	--game over logic
 	if collide then
-		love.graphics.print("Let's stop this game!!", 0, 100)
+		sounds.bg:stop()
+		love.graphics.setColor(1,0,0)
+		love.graphics.print("GAME OVER!!", 0, 100)
+		love.graphics.reset()
 	end
 
 end

@@ -31,6 +31,7 @@ function player_update(dt)
     if love.keyboard.isDown("space") and player.isGrounded then
         player.isGrounded = false;
         player.dy = player.dy - jump_str 
+        sounds.jump:play()
     end
 
     player.y = player.y + player.dy * dt
