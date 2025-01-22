@@ -1,3 +1,5 @@
+require "player"
+
 function enemy_load()
     enemy_list = {}
 
@@ -31,8 +33,20 @@ function enemy_update(dt)
     --enemy movement / collision / destruction
     for i = #enemy_list, 1, -1 do
         local enemy = enemy_list[i]
+
+        --collide
+
+        if CheckCollision(player.x,player.y, player.width, player.height, enemy.x, enemy.y, enemy.width, enemy.height) then
+            collide = true;
+        else
+            collide = false;
+        end
+
+
+        --destroy
         if enemy.x <= 0 then
             table.remove(enemy_list, i)
+        --move
         else 
             enemy.x = enemy.x - enemy.speed * dt
         end
@@ -46,7 +60,14 @@ function enemy_draw(dt)
     if debug then
         love.graphics.setColor(1,0,0)
         love.graphics.print("timeSince" .. time_since_last_spawn, 0, 40)
-        love.graphics.print("setInterval" .. set_interval, 0, 60)
+        love.graphics.print("setIntervael" .. set_interval, 0, 60)
+
+        if collide then
+            love.graphics.print("COLLIDE!", 0, 80)
+        else
+            love.graphics.print("not collide", 0, 80)
+        end
+
         love.graphics.reset()
     end
      
@@ -56,7 +77,7 @@ function enemy_draw(dt)
         if debug then
             love.graphics.setColor(1,0,0)
             love.graphics.rectangle("fill", enemy.x, 250, enemy.width, enemy.height) 
-            love.graphics.print("speed" .. enemy.speed, i * 120,20)
+            love.graphics.print("speed" .. enemy.speed, i * 120 ,20)
             love.graphics.reset()
         end
 
