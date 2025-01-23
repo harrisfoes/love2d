@@ -3,7 +3,7 @@ require "enemy"
 
 g_ground = 280
 debug = false  
-collide = false
+game_over = false
 
 function love.load()
 	player_load()
@@ -17,13 +17,21 @@ function love.load()
 	sounds.bg:setLooping(true)
 	sounds.jump = love.audio.newSource("audio/jump.mp3", "stream", "true")
 
+	love.audio.setVolume(0.2)
 	sounds.bg:play()
+
+	font = love.graphics.newFont('font/Pixeltype.ttf', 40)
+	score = 0
 
 end
 
 function love.update(dt)
 
-	if not collide then
+	if not game_over then
+
+		--score
+		score = math.floor(score + (dt * 90))
+
 		player_update(dt)
 		enemy_update(dt)
 	end
@@ -38,11 +46,18 @@ function love.draw()
 	player_draw()
 	enemy_draw()
 
+	--score
+	love.graphics.setFont(font)
+	love.graphics.setColor(0, 0.4, 0.6, 0.3)
+	love.graphics.printf("Score: " .. score, 20, 30, love.graphics.getWidth(), "left")
+	love.graphics.reset()
+
 	--game over logic
-	if collide then
+	if game_over then
 		sounds.bg:stop()
-		love.graphics.setColor(1,0,0)
-		love.graphics.print("GAME OVER!!", 0, 100)
+		love.graphics.setFont(font)
+		love.graphics.setColor(1, 0.4, 0.6, 0.3)
+		love.graphics.printf("GAME OVER!", 0, 200, love.graphics.getWidth(), "center")
 		love.graphics.reset()
 	end
 

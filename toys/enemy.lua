@@ -37,9 +37,9 @@ function enemy_update(dt)
         --collide
 
         if CheckCollision(player.x,player.y, player.width, player.height, enemy.x, enemy.y, enemy.width, enemy.height) then
-            collide = true;
+            game_over = true;
         else
-            collide = false;
+            game_over = false;
         end
 
 
@@ -62,7 +62,7 @@ function enemy_draw(dt)
         love.graphics.print("timeSince" .. time_since_last_spawn, 0, 40)
         love.graphics.print("setIntervael" .. set_interval, 0, 60)
 
-        if collide then
+        if game_over then
             love.graphics.print("COLLIDE!", 0, 80)
         else
             love.graphics.print("not collide", 0, 80)

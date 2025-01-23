@@ -28,6 +28,9 @@ The purpose of this game is to enjoy programming a fun program
 
 [x] make background
 [x] collisions
-[ ] figure out config file and screen dimensions
 
+[x] font
+[x] score
+
+[ ] reset
 [ ] polish
