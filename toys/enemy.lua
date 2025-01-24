@@ -85,3 +85,10 @@ function enemy_draw(dt)
     end
 
 end
+
+function enemy_reset()
+    for i = #enemy_list, 1, -1 do
+        local enemy = enemy_list[i]
+        table.remove(enemy_list, i)
+    end
+end

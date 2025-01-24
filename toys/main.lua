@@ -35,6 +35,13 @@ function love.update(dt)
 		player_update(dt)
 		enemy_update(dt)
 	end
+
+	if game_over then
+		--
+		if love.keyboard.isDown("return") then
+			reset_game()
+		end
+	end
 end
 
 
@@ -58,6 +65,7 @@ function love.draw()
 		love.graphics.setFont(font)
 		love.graphics.setColor(1, 0.4, 0.6, 0.3)
 		love.graphics.printf("GAME OVER!", 0, 200, love.graphics.getWidth(), "center")
+		love.graphics.printf("Press <Enter> to play again", 0, 240, love.graphics.getWidth(), "center")
 		love.graphics.reset()
 	end
 
@@ -68,4 +76,14 @@ function CheckCollision(x1,y1,w1,h1, x2,y2,w2,h2)
 		   x2 < x1+w1 and
 		   y1 < y2+h2 and
 		   y2 < y1+h1
+end
+
+function reset_game() 
+
+	score = 0
+	game_over = false
+
+	player_reset()
+	enemy_reset()
+	sounds.bg:play()
 end

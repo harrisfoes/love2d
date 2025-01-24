@@ -84,3 +84,10 @@ function player_draw()
         love.graphics.draw(player.spr_jump, player.x, player.y)
     end
 end
+
+function player_reset()
+    player.x = 30
+    player.y = 200
+    player.isGrounded = true
+    walkcycle_counter = 0
+end
