@@ -1,7 +1,7 @@
 require "player"
 require "enemy"
 
-g_ground = 280
+g_ground = 300
 debug = false  
 game_over = false
 

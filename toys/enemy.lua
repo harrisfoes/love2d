@@ -13,7 +13,7 @@ function create_enemy()
         width = snail_image:getWidth(),
         height = snail_image:getHeight(),
         x = love.graphics.getWidth(), --todo che`ck this value
-        y = 250,
+        y = 270,
         speed = math.random(600, 800),
         sprite = snail_image 
     }
@@ -76,7 +76,7 @@ function enemy_draw(dt)
 
         if debug then
             love.graphics.setColor(1,0,0)
-            love.graphics.rectangle("fill", enemy.x, 250, enemy.width, enemy.height) 
+            love.graphics.rectangle("fill", enemy.x, 270, enemy.width, enemy.height) 
             love.graphics.print("speed" .. enemy.speed, i * 120 ,20)
             love.graphics.reset()
         end

@@ -32,5 +32,5 @@ The purpose of this game is to enjoy programming a fun program
 [x] font
 [x] score
 
-[ ] reset
+[x] reset
 [ ] polish

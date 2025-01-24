@@ -5,7 +5,7 @@ player_box = love.graphics.newImage('graphics/Player/player_stand.png')
 function player_load()
     player = {}
     player.x = 30
-    player.y = 280 - 80
+    player.y = 300 - 80
     player.width = player_box:getWidth() 
     player.height = player_box:getHeight() 
     player.dy = 0
@@ -37,8 +37,8 @@ function player_update(dt)
     player.y = player.y + player.dy * dt
 
     -- when player falls to the ground, reset
-    if player.y + player.height > ground then
-        player.y = ground - player.height
+    if player.y + player.height > g_ground then
+        player.y = g_ground - player.height
         player.isGrounded = true
         player.dy = 0
     end 
@@ -87,7 +87,7 @@ end
 
 function player_reset()
     player.x = 30
-    player.y = 200
+    player.y = 220
     player.isGrounded = true
     walkcycle_counter = 0
 end
