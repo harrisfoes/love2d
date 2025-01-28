@@ -1,4 +1,5 @@
 require "player"
+require "pipes"
 local push = require "push"
 
 local GAME_WIDTH = 1280
@@ -34,6 +35,7 @@ function love.load()
     love.keyboard.keysPressed = {}
 
     player_load()
+    pipes_load()
 
 end
 
@@ -43,6 +45,7 @@ function love.update(dt)
     groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) % 500
 
     player_update(dt)
+    pipes_update(dt)
 
     --reset the keys pressed table, we only want to check per frame
     love.keyboard.keysPressed = {}
@@ -69,6 +72,7 @@ function love.draw()
     love.graphics.draw(ground, -groundScroll, 272)
     
     player_draw()
+    pipes_draw()
 
     push:finish()
 end

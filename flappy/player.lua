@@ -27,11 +27,5 @@ function player_draw()
     love.graphics.print(player.x, 0, 20)
     love.graphics.print(player.y, 0, 10)
 
-    if spacey then
-        love.graphics.print("spacey", 0, 30)
-    else
-        love.graphics.print("un-spacey", 0, 30)
-    end
 
-    love.graphics.print("awaw", player.x, player.y)
 end
