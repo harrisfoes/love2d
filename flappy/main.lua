@@ -11,6 +11,10 @@ VIRTUAL_HEIGHT = 288
 GRAVITY = 20
 JUMP_STRENGTH = 5
 
+--game states
+-- when game open -> start, when defeated -> game_over, when enter pressed -> start
+game_state = "start"
+
 local BACKGROUND_SCROLL_SPEED = 30
 local GROUND_SCROLL_SPEED = 60
 local BACKGROUND_LOOPING_POINT = 413
@@ -34,6 +38,8 @@ function love.load()
 
     love.keyboard.keysPressed = {}
 
+    math.randomseed(os.time())
+
     player_load()
     pipes_load()
 
@@ -41,11 +47,18 @@ end
 
 function love.update(dt)
 
-    backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % BACKGROUND_LOOPING_POINT
-    groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) % 500
+    if game_state == "start" then
+        backgroundScroll = (backgroundScroll + BACKGROUND_SCROLL_SPEED * dt) % BACKGROUND_LOOPING_POINT
+        groundScroll = (groundScroll + GROUND_SCROLL_SPEED * dt) % 500
+        player_update(dt)
+        pipes_update(dt)
+    end
 
-    player_update(dt)
-    pipes_update(dt)
+    if game_state == "game_over" then
+        if love.keyboard.wasPressed("return") then
+            reset_game()
+        end
+    end
 
     --reset the keys pressed table, we only want to check per frame
     love.keyboard.keysPressed = {}
@@ -68,11 +81,27 @@ function love.draw()
     push:start()
 
     --background
-    love.graphics.draw(background, -backgroundScroll, 0)
-    love.graphics.draw(ground, -groundScroll, 272)
-    
-    player_draw()
+
+    love.graphics.draw(background, -backgroundScroll, 0) 
+
     pipes_draw()
+    player_draw()
+
+    love.graphics.draw(ground, -groundScroll, 272)
+
+    if game_state == "game_over" then
+       love.graphics.printf("Press <Enter> to play again", 0, 240, VIRTUAL_WIDTH, "center")
+    end
 
     push:finish()
 end
+
+function reset_game()
+    game_state = "start"
+    backgroundScroll = 0
+    groundScroll = 0
+    player_reset()
+    pipes_reset()
+end
+
+
