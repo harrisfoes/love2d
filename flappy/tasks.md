@@ -14,9 +14,9 @@
 [x] added pipe sprites
 [x] fix top sprite orientation
 
-[ ] collision
+[x] collision
 
 [ ] scores
-[ ] game states
+[x] game states
 
 [ ] how about let's make an itch page

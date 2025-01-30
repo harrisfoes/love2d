@@ -8,7 +8,6 @@ local pipeImage = love.graphics.newImage("graphics/pipe.png")
 local pipeImageHeight = pipeImage:getHeight()
 local pipeImageWidth = pipeImage:getWidth()
 
-local collide = false
 
 function pipes_load()
     pipeList = {}
@@ -49,14 +48,16 @@ function pipes_update(dt)
             table.remove(pipeList, i)
         end
 
+        local colliderX = player.x + 12
+        local colliderY = player.y + 12
+        local colliderW = player.width - 32
+        local colliderH = player.height - 16
+
         --check collision
-        if checkCollision(pipe.topX,pipe.topY,pipe.width, pipe.height, player.x, player.y, player.width, player.height)
-            or checkCollision(pipe.topX, pipe.topY + pipe.height + pipe.gap, pipe.width, VIRTUAL_HEIGHT - pipe.topY, player.x, player.y, player.width, player.height)
+        if checkCollision(pipe.topX,pipe.topY,pipe.width, pipe.height, colliderX, colliderY, colliderW, colliderH)
+            or checkCollision(pipe.topX, pipe.topY + pipe.height + pipe.gap, pipe.width, VIRTUAL_HEIGHT - pipe.topY, colliderX, colliderY, colliderW, colliderH)
         then
-            collide = true
             game_state = "game_over"
-        else
-            collide = false
         end
     end
 
@@ -64,8 +65,8 @@ end
 
 function pipes_draw()
 
-    love.graphics.print("timer " .. pipeRespawnTimer, 0, 60)
-    love.graphics.print("pipe size " .. #pipeList, 0, 70)
+    --love.graphics.print("timer " .. pipeRespawnTimer, 0, 60)
+    --love.graphics.print("pipe size " .. #pipeList, 0, 70)
 
     for i, pipes in ipairs(pipeList) do
 
@@ -77,17 +78,15 @@ function pipes_draw()
         love.graphics.draw(pipeImage, pipes.topX, pipes.topY + pipes.height + pipes.gap)
 
         -- debug lines top / bottom
-        love.graphics.setColor(255,0,255)
-        love.graphics.rectangle("line", pipes.topX, pipes.topY, pipes.width, pipes.height)
-        love.graphics.rectangle("line", pipes.topX, pipes.topY + pipes.height + pipes.gap, pipes.width, VIRTUAL_HEIGHT - pipes.topY)
-        love.graphics.setColor(1,1,1)
+        if DEBUG then
+            love.graphics.setColor(255,0,255)
+            love.graphics.rectangle("line", pipes.topX, pipes.topY, pipes.width, pipes.height)
+            love.graphics.rectangle("line", pipes.topX, pipes.topY + pipes.height + pipes.gap, pipes.width, VIRTUAL_HEIGHT - pipes.topY)
+            love.graphics.setColor(1,1,0)
+            love.graphics.rectangle("line", player.x + 12, player.y + 12, player.width - 32, player.height - 16)
+            love.graphics.setColor(1,1,1)
+        end 
 
-    end
-
-    if collide then
-        love.graphics.print("COLLIDE!", 0, 100)
-    else
-        love.graphics.print("not collide", 0, 100)
     end
 
 end

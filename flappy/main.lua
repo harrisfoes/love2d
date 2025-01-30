@@ -11,6 +11,8 @@ VIRTUAL_HEIGHT = 288
 GRAVITY = 20
 JUMP_STRENGTH = 5
 
+DEBUG = true
+
 --game states
 -- when game open -> start, when defeated -> game_over, when enter pressed -> start
 game_state = "start"
@@ -81,7 +83,6 @@ function love.draw()
     push:start()
 
     --background
-
     love.graphics.draw(background, -backgroundScroll, 0) 
 
     pipes_draw()
