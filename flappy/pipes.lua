@@ -61,8 +61,8 @@ function pipes_update(dt)
         if checkCollision(pipe.topX,pipe.topY,pipe.width, pipe.height, colliderX, colliderY, colliderW, colliderH)
             or checkCollision(pipe.topX, pipe.topY + pipe.height + pipe.gap, pipe.width, VIRTUAL_HEIGHT - pipe.topY, colliderX, colliderY, colliderW, colliderH)
         then
-            game_state = "game_over"
             explode:play()
+            game_state = "game_over"
         end
 
         --score

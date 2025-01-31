@@ -9,7 +9,7 @@ function player_load()
     player.dy = 0
 
     player.jumpSound = love.audio.newSource("audio/jump.wav", "stream", "true")
-
+    player.explode = love.audio.newSource('audio/explosion.wav', 'stream', 'true')
 end
 
 function player_update(dt)
@@ -25,6 +25,7 @@ function player_update(dt)
 
     if player.y > VIRTUAL_HEIGHT then
         game_state = "game_over"
+        player.explode:play()
     end
 
 end

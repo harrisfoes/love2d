@@ -11,7 +11,7 @@ VIRTUAL_HEIGHT = 288
 GRAVITY = 20
 JUMP_STRENGTH = 5
 
-DEBUG = true
+DEBUG = false 
 
 SCORE = 0
 
@@ -53,6 +53,8 @@ function love.load()
 
     love.audio.setVolume(0.2)
     sounds.bg:play()
+
+    font = love.graphics.newFont('fonts/press_start.ttf', 12)
 
 end
 
@@ -102,11 +104,13 @@ function love.draw()
 
     love.graphics.draw(ground, -groundScroll, 272)
 
+    love.graphics.setFont(font)
+
     if game_state == "game_over" then
        love.graphics.printf("Press <Enter> to play again", 0, 240, VIRTUAL_WIDTH, "center")
     end
     
-    love.graphics.print("SCORE: " .. SCORE, 0, 0)
+    love.graphics.print("SCORE: " .. SCORE, 20, 10)
 
     push:finish()
 end
