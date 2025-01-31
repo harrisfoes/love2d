@@ -8,6 +8,8 @@ local pipeImage = love.graphics.newImage("graphics/pipe.png")
 local pipeImageHeight = pipeImage:getHeight()
 local pipeImageWidth = pipeImage:getWidth()
 
+local score = love.audio.newSource('audio/score.wav', 'stream', 'true')
+local explode = love.audio.newSource('audio/explosion.wav', 'stream', 'true')
 
 function pipes_load()
     pipeList = {}
@@ -23,7 +25,8 @@ function create_pipe()
         topY = 0,
         width = 60,
         height = height,
-        gap = gap 
+        gap = gap,
+        pipeIsChecked = false
     }
 end
 
@@ -48,6 +51,7 @@ function pipes_update(dt)
             table.remove(pipeList, i)
         end
 
+        --collider minified
         local colliderX = player.x + 12
         local colliderY = player.y + 12
         local colliderW = player.width - 32
@@ -58,15 +62,20 @@ function pipes_update(dt)
             or checkCollision(pipe.topX, pipe.topY + pipe.height + pipe.gap, pipe.width, VIRTUAL_HEIGHT - pipe.topY, colliderX, colliderY, colliderW, colliderH)
         then
             game_state = "game_over"
+            explode:play()
+        end
+
+        --score
+        if player.x > pipe.topX + pipe.width and pipe.pipeIsChecked == false then
+            SCORE = SCORE + 100
+            score:play()
+            pipe.pipeIsChecked = true
         end
     end
 
 end
 
 function pipes_draw()
-
-    --love.graphics.print("timer " .. pipeRespawnTimer, 0, 60)
-    --love.graphics.print("pipe size " .. #pipeList, 0, 70)
 
     for i, pipes in ipairs(pipeList) do
 

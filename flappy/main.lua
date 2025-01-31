@@ -13,6 +13,8 @@ JUMP_STRENGTH = 5
 
 DEBUG = true
 
+SCORE = 0
+
 --game states
 -- when game open -> start, when defeated -> game_over, when enter pressed -> start
 game_state = "start"
@@ -45,6 +47,13 @@ function love.load()
     player_load()
     pipes_load()
 
+    sounds = {}
+    sounds.bg = love.audio.newSource('audio/marios_way.mp3', 'stream', 'true')
+    sounds.bg:setLooping(true)
+
+    love.audio.setVolume(0.2)
+    sounds.bg:play()
+
 end
 
 function love.update(dt)
@@ -57,6 +66,9 @@ function love.update(dt)
     end
 
     if game_state == "game_over" then
+
+        sounds.bg:stop()
+
         if love.keyboard.wasPressed("return") then
             reset_game()
         end
@@ -93,6 +105,8 @@ function love.draw()
     if game_state == "game_over" then
        love.graphics.printf("Press <Enter> to play again", 0, 240, VIRTUAL_WIDTH, "center")
     end
+    
+    love.graphics.print("SCORE: " .. SCORE, 0, 0)
 
     push:finish()
 end
@@ -101,6 +115,8 @@ function reset_game()
     game_state = "start"
     backgroundScroll = 0
     groundScroll = 0
+    SCORE = 0
+    sounds.bg:play()
     player_reset()
     pipes_reset()
 end

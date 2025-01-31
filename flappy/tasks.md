@@ -16,7 +16,9 @@
 
 [x] collision
 
-[ ] scores
+[x] scores
 [x] game states
+
+[ ] audio
 
 [ ] how about let's make an itch page

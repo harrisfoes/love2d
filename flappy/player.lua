@@ -8,6 +8,8 @@ function player_load()
     player.y = VIRTUAL_HEIGHT / 2 - player.height - 50
     player.dy = 0
 
+    player.jumpSound = love.audio.newSource("audio/jump.wav", "stream", "true")
+
 end
 
 function player_update(dt)
@@ -16,9 +18,7 @@ function player_update(dt)
 
     if love.keyboard.wasPressed("space") then
         player.dy = -JUMP_STRENGTH 
-        spacey = true
-    else
-        spacey = false
+        player.jumpSound:play() 
     end
 
     player.y = player.y + player.dy
