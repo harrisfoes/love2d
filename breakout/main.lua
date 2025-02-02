@@ -1,5 +1,6 @@
 local push = require "push"
 require "player"
+require "puck"
 
 GAMEWIDTH = 1280
 GAMEHEIGHT = 720
@@ -20,13 +21,18 @@ function love.load()
 
     love.keyboard.keysPressed = {}
 
+    --random seed
+    math.randomseed(os.time())
+
     player_load()
+    puck_load()
 
 end
 
 function love.update(dt)
 
     player_update(dt)
+    puck_update(dt)
 
     love.keyboard.keysPressed = {}
 end
@@ -48,6 +54,7 @@ function love.draw()
 
     love.graphics.print("hello world", 0, 10)
     player_draw()
+    puck_draw()
 
     push:finish()
 
